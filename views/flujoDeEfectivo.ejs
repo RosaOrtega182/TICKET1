@@ -1,0 +1,79 @@
+<%- include ('./parts/header')%>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Flujo de efectivo</h1>
+                      
+
+                      
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                DataTable Flujo de Efectivo
+                            </div>
+
+                            <div class="card-body">
+                                <% if (cantidad > 0) { %>
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>Id Presupuesto</th>
+                                            <th>Fecha creación</th>
+                                            <th>Proyecto</th>
+                                            <th>Versiones</th>
+                                            <th>Flujo de efectivo</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Id Presupuesto</th>
+                                            <th>Fecha creación</th>
+                                            <th>Proyecto</th>
+                                            <th>Versiones</th>
+                                            <th>Flujo de efectivo</th>
+                                           
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <% todosLosPresupuestos.forEach(function(budget){ %>
+                                        <tr>
+                                            <td><%= budget.id_Presupuesto %></td>
+                                            <td><%= budget.fecha_creacion %></td>
+                                            <td><%= budget.proyecto %></td>
+                                            <td><%= budget.versiones %></td>
+                                            <td><a href="/flujoDeEfectivo/showFlujoDeEfectivo/<%= budget.id_Presupuesto %>"><i class="fas fa-edit"></i>&nbspFlujo de Efectivo</a></td>
+                                            
+                                           
+                                        </tr>
+                                        <% }); %>
+                                        
+                                    </tbody>
+                                </table>
+                                <% } else {%>
+                                    <h3 class="text-center">No hay presupuestos.</h3>
+                                    <% }%>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Your Website 2021</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="js/datatables-simple-demo.js"></script>
+    </body>
+</html>

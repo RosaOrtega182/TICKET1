@@ -66,9 +66,7 @@ class FinancialFlow extends Model
     {
         return await FinancialFlow.findAll({
        
-           raw: true,
-           nest: true ,// unflattens but does not fix problem
-        
+           raw: true        
            // include: { all: true }
            include: [
             

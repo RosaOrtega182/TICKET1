@@ -1,6 +1,5 @@
 const {DataTypes, Model}= require ('sequelize');
 const sequelize= require('./conexion');
-const moment=require('moment');
 
 
 
@@ -18,29 +17,29 @@ class Budget extends Model
         return await Budget.count();
     }
 
-    async addBudget(fechaCreacion,proyecto,version)
+    async addBudget(creationDate,proyect,version)
     {
         return await Budget.findOrCreate(
             {
-                where: { proyecto: proyecto },
+                where: { proyecto: proyect },
                 defaults:
                 {
-                    fecha_creacion:fechaCreacion,
-                    proyecto: proyecto,
+                    fecha_creacion:creationDate,
+                    proyecto: proyect,
                     versiones: version
                 }
             });
     }
 
 
-    async findByPrimaryKey(id)
+    async findByPrimaryKey(id_Budget)
     {
-        return await Budget.findByPk(id);
+        return await Budget.findByPk(id_Budget);
     }
 
 
 
-    async countAllBudgetsByProyecto(proyecto,id)
+    async countAllBudgetsByProyect(proyecto,id_Budget)
     {
 
         const Op = require('sequelize').Op;
@@ -52,7 +51,7 @@ class Budget extends Model
             where:
             {
                 proyecto: proyecto,
-                id_Presupuesto:  { [Op.ne]: id }
+                id_Presupuesto:  { [Op.ne]: id_Budget }
             }
         });
 
@@ -60,11 +59,21 @@ class Budget extends Model
     }
 
 
-    async editBudget(fecha_creacion,proyecto,versiones,id_Presupuesto)
+    async editBudget(creationDate,proyect,version,id_Budget)
     {
-        await Budget.update({  fecha_creacion: fecha_creacion, proyecto: proyecto, versiones:versiones }, {
+        await Budget.update({  fecha_creacion: creationDate, proyecto: proyect, versiones:version }, {
             where: {
-              id_Presupuesto:  id_Presupuesto
+              id_Presupuesto:  id_Budget
+            }
+          });
+    }
+
+
+    async deleteBudget(id_Budget)
+    {
+        await Budget.destroy({
+            where: {
+              id_Presupuesto: id_Budget
             }
           });
     }

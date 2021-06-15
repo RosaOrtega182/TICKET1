@@ -51,18 +51,18 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="/presupuestos">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            <div class="sb-sidenav-menu-heading">Interfaz Principal</div>
+                            <a class="nav-link" href="/">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Presupuestos
                             </a>
                            
                             <div class="sb-sidenav-menu-heading">SECCIONES</div>
                             <a class="nav-link" href="#">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Resumen Financiero
                             </a>
-                            <a class="nav-link" href="/flujoDeEfectivo">
+                            <a class="nav-link" href="/cashFlow">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Flujo de efectivo
                             </a>
@@ -70,27 +70,27 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Estado de resultados
                             </a>
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/incomes">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Ingresos
                             </a>
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/directCosts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Costos directos
                             </a>
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/administrativeExpenses">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Gastos administrativos
                             </a>
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/resources">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Recursos
                             </a>
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/costs">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Costos
                             </a>
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/summaryCostsResources">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Resumen costos recursos
                             </a>
@@ -103,12 +103,4 @@
                 </nav>
             </div>
 
-            <%- messages('messages',locals)%> 
-
-            <% if (errors) {%>
-                <% errors.forEach(function(error) { %>
-                    <div class="alert alert-danger">
-                        <%= error.msg %>
-                    </div>
-                <% });%>
-            <% }%>
+          

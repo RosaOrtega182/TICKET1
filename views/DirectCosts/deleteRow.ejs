@@ -1,40 +1,39 @@
-<%- include ('./parts/header')%>
+<%- include ('../parts/header')%>
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
+                        <%- messages('messages',locals)%> 
+
+                        <% if (errors) {%>
+                            <% errors.forEach(function(error) { %>
+                                <div class="alert alert-danger">
+                                    <%= error.msg %>
+                                </div>
+                            <% });%>
+                        <% }%>
+
                        
-                        <h1 class="text-center mt-4">Registrar presupuesto</h1>
+                        <h1 class="text-center mt-4">Eliminar Fila</h1>
 
-                        <a href="/presupuestos" class="btn btn-primary">Regresar a ver todos los presupuestos</a>
 
-                        <form method="POST" class="mt-3" action="/presupuestos/addPresupuesto">
+                        <form method="POST" class="mt-3" action="/directCosts/deleteRow/<%= id_Presupuesto %>">
 
                             
 
 
                             <div class="form-group mt-3">
-                                <label for="" class="fw-bold">Fecha de creación</label>
-                                
-                                <input type="datetime" class="form-control" id="datetimepicker" name="fechaCreacion" placeholder="Fecha de creación del presupuesto">
-                     
-                                </div>
-
-                    
-                            <div class="form-group mt-3">
-                                <label for="" class="fw-bold">Proyecto</label>
-                                <input type="text" class="form-control" name="proyecto"  placeholder="Especificación del Proyecto al que pertenece el presupuesto.">
+                                <label for="" class="fw-bold">Concepto</label>
+                                <select name="concepto" class="form-control">
+                                    <% instanceRowEntry.forEach(function(concept){ %>
+                                        <option value="<%= concept.id_fila %>"><%= concept.nombre %></option>
+                                    <% }); %>
+                                </select>
                             </div>
                     
-                            <div class="form-group mt-3">
-                                <label for="" class="fw-bold">Versiones</label>
-                                <input type="number" class="form-control" name="version"  placeholder="Especificación de la última versión registrada">
-                            </div>
-                    
-                       
                            
                     
                            
-                            <button type="submit" class="btn btn-primary mt-3">Agregar</button>
+                            <button type="submit" class="btn btn-primary mt-3">Eliminar</button>
                           </form>
                         
                        

@@ -1,45 +1,52 @@
-const Presupuesto= require('../models/budget')
-const budget = Presupuesto.build();
+const Budget= require('../models/budget')
+const budget = Budget.build();
+const RowEntry=require('../models/rowEntry');
+const rowEntry=  RowEntry.build();
+const RowDirectCosts= require('../models/rowDirectCosts');
+const rowDirectCosts= RowDirectCosts.build();
+const RowAdministrativeExpenses= require('../models/rowAdministrativeExpenses');
+const rowAdministrativeExpenses= RowAdministrativeExpenses.build();
+const RowResources= require('../models/rowResources');
+const rowResources= RowResources.build();
+const RowCosts= require('../models/rowCosts');
+const rowCosts= RowCosts.build();
+const RowSummaryCostsResources= require('../models/rowSummaryCostsResources');
+const rowSummaryCostsResources= RowSummaryCostsResources.build();
 
 
-exports.getPresupuestoIndexes=async(req,res,next)=>
+exports.getBudgetIndexes=async(req,res,next)=>
 {
     
-    const listaPresupuestos = await budget.listAllBudgets();
-    const numRegistros= await budget.countAllBudgets();
-    //res.send('admin area narf');
-    res.render('presupuestos',
+    const listBudget = await budget.listAllBudgets();
+    const numberRecords= await budget.countAllBudgets();
+    res.render('budgets',
     {
-        todosLosPresupuestos:listaPresupuestos,
-        cantidad: numRegistros
+        allBudgets:listBudget,
+        quantity: numberRecords
     });
    
 }
 
 
 
-/* GET  ADD PRODUCT*/
-exports.addPresupuestoGet=async(req,res,next)=>
+
+exports.addBudgetGet=async(req,res,next)=>
 {
-    res.render('addPresupuesto');
+    res.render('Budget/addBudget');
    
 }
 
 
 
-
-/* POST  ADD PRODUCT*/
-
-
-exports.addPresupuestoPost=async(req,res,next)=>
+exports.addBudgetPost=async(req,res,next)=>
 {
 
   
-    let fechaCreacion= req.body.fechaCreacion;
-    let proyecto=req.body.proyecto;
+    let creationDate= req.body.fechaCreacion;
+    let proyect=req.body.proyecto;
     let version=req.body.version;
-   
 
+   
 
     req.checkBody('fechaCreacion','El campo fecha debe de tener un valor').notEmpty();
     req.checkBody('proyecto','El campo proyecto debe de tener un valor').notEmpty();
@@ -52,29 +59,32 @@ exports.addPresupuestoPost=async(req,res,next)=>
    
     if(errors)
     {
-        res.render('addPresupuesto');
+        res.render('Budget/addBudget',
+        {
+            errors: errors
+        });
          
     }
     else
     {
 
-       
-        console.log(version);
-         
+             
     
-        const [instance, wasCreated] = await budget.addBudget(fechaCreacion,proyecto,version);
+        const [instance, wasCreated] = await budget.addBudget(creationDate,proyect,version);
 
         if(wasCreated)
         {
-        // req.flash('success','Producto agregado troz');
-            res.redirect('/presupuestos')
-                   // console.log("se creo");
+       
+            res.redirect('/')
+                   
         }
         else
         {
-            req.flash('danger','Este presupuesto ya ha sido creado');
+            req.flash('danger','Este nombre de presupuesto ya ha sido creado');
          
-            res.render('addPresupuesto');
+            res.render('Budget/addBudget',{
+             errors: errors
+            });
          
               
 
@@ -83,19 +93,18 @@ exports.addPresupuestoPost=async(req,res,next)=>
 }
 
 
-/* GET  EDIT PRODUCT*/
-exports.editPresupuestoGet= async(req,res,next)=>
+exports.editBudgetGet= async(req,res,next)=>
 {      
     
-   const id_Presupuesto= req.params.idPresupuesto;
-   const instanceBudget= await budget.findByPrimaryKey(id_Presupuesto);
+   const id_Budget= req.params.idBudget;
+   const instanceBudget= await budget.findByPrimaryKey(id_Budget);
 
-  res.render('editPresupuesto',
+  res.render('Budget/editBudget',
    {
-        fecha_creacion: instanceBudget.fecha_creacion,
-        proyecto: instanceBudget.proyecto,
-        versiones: instanceBudget.versiones,
-        id_Presupuesto: instanceBudget.id_Presupuesto
+        creationDate: instanceBudget.fecha_creacion,
+        proyect: instanceBudget.proyecto,
+        version: instanceBudget.versiones,
+        id_Budget: instanceBudget.id_Presupuesto
 
 
    });  
@@ -110,12 +119,12 @@ exports.editPresupuestoGet= async(req,res,next)=>
 
 
 
-exports.editPresupuestoPost=async(req,res,next)=>
+exports.editBudgetPost=async(req,res,next)=>
 {
-    let fecha_creacion= req.body.fechaCreacion;
-    let proyecto=req.body.proyecto;
-    let versiones=req.body.version;
-    const id_Presupuesto= req.params.idPresupuesto;
+    let creationDate= req.body.fechaCreacion;
+    let proyect=req.body.proyecto;
+    let version=req.body.version;
+    const id_Budget= req.params.idBudget;
 
 
     req.checkBody('fechaCreacion','El campo fecha debe de tener un valor').notEmpty();
@@ -131,21 +140,22 @@ exports.editPresupuestoPost=async(req,res,next)=>
     if(errors)
     {
        
-        const instanceBudget= await budget.findByPrimaryKey(id_Presupuesto);
+        const instanceBudget= await budget.findByPrimaryKey(id_Budget);
 
-        res.render('editPresupuesto',
+        res.render('Budget/editBudget',
          {
-              fecha_creacion: instanceBudget.fecha_creacion,
-              proyecto: instanceBudget.proyecto,
-              versiones: instanceBudget.versiones,
-              id_Presupuesto: instanceBudget.id_Presupuesto
+              creationDate: instanceBudget.fecha_creacion,
+              proyect: instanceBudget.proyecto,
+              version: instanceBudget.versiones,
+              id_Budget: instanceBudget.id_Presupuesto,
+              errors:errors
       
       
          });  
     }
     else
     {
-        const cantity = await budget.countAllBudgetsByProyecto(proyecto,id_Presupuesto);
+        const cantity = await budget.countAllBudgetsByProyect(proyect,id_Budget);
  
         
 
@@ -154,14 +164,15 @@ exports.editPresupuestoPost=async(req,res,next)=>
         {
 
             req.flash('danger','El nombre del proyecto  ya ha sido creado');
-            const instanceBudget2= await budget.findByPrimaryKey(id_Presupuesto);
+            const instanceBudget2= await budget.findByPrimaryKey(id_Budget);
 
-            res.render('editPresupuesto',
+            res.render('Budget/editBudget',
              {
-                  fecha_creacion: instanceBudget2.fecha_creacion,
-                  proyecto: instanceBudget2.proyecto,
-                  versiones: instanceBudget2.versiones,
-                  id_Presupuesto: instanceBudget2.id_Presupuesto
+                  creationDate: instanceBudget2.fecha_creacion,
+                  proyect: instanceBudget2.proyecto,
+                  version: instanceBudget2.versiones,
+                  id_Budget: instanceBudget2.id_Presupuesto,
+                  errors: errors
           
           
              });  
@@ -170,11 +181,45 @@ exports.editPresupuestoPost=async(req,res,next)=>
         }
         else
         {
-           console.log(fecha_creacion);
-            await budget.editBudget(fecha_creacion,proyecto,versiones,id_Presupuesto);
+           
+            await budget.editBudget(creationDate,proyect,version,id_Budget);
             //req.flash('success', 'Se actualizo el presupuesto!');
-            res.redirect('/presupuestos')       
+            res.redirect('/')       
         }
     }
+}
+
+
+exports.deleteBudgetGet=async (req,res,next)=>
+{
+    let id_Budget = req.params.idBudget;
+    const instanceRowEntry=  await rowEntry.deleteRowEntryByIdBudget(id_Budget);
+
+    if(instanceRowEntry===null)
+    {
+        req.flash('danger','El presupuesto no se eliminó');
+       
+    }
+    else
+    {
+        const instanceBudget= await budget.deleteBudget(id_Budget) ;
+   
+        //DELETE ROW INGRESOS
+        const instanceRowEntry= await rowEntry.deleteRowEntryByIdBudget(id_Budget);
+        //DELETE ROW COSTOSDIRECTOS
+        const instanceRowDirectCosts= await rowDirectCosts.deleteRowDirectCostsByIdBudget(id_Budget);
+         //DELETE ROW GASTOS ADMINISTRATIVOS
+         const instanceRowAdministrativeExpenses= await rowAdministrativeExpenses.deleteAdministrativeExpensesByIdBudget(id_Budget);
+        //DELETE ROW RECURSOS
+        const instanceResources= await rowResources.deleteRowResourcesByIdBudget(id_Budget);
+         //DELETE ROW COSTOS
+         const instanceCosts= await rowCosts.deleteRowCostsByIdBudget(id_Budget);
+          //DELETE ROW RESUMEN COSTOS RECURSOS
+        const instanceSummary= await rowSummaryCostsResources.deleteRowSummaryCostsResourcesByIdBudget(id_Budget);
+
+
+        res.redirect('/');   
+    }
+
 }
   

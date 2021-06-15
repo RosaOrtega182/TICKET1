@@ -3,27 +3,29 @@
                 <main>
                     <div class="container-fluid px-4">
                        
-                        <h1 class="text-center mt-4">Agregar columna</h1>
+                        <h1 class="mt-4">Editar ingreso</h1>
+                      
+                        <a href="/incomes/showIncomes/<%= idPresupuesto %>" class="btn btn-primary">Regresar a ingresos</a>
+
+                      
 
 
-                        <form method="POST" class="mt-3" action="/flujoDeEfectivo/addColumn/<%= id_Presupuesto %>">
+                        <form method="POST" class="mt-3" action="/incomes/editConcept/<%= id_info %>">
 
                             
 
 
                             <div class="form-group mt-3">
-                                <label for="" class="fw-bold">Mes inicial</label>
-                                <select name="mes" class="form-control">
-                                    <% months.forEach(function(mes){ %>
-                                        <option value="<%= mes.id_mes %>"><%= mes.nombre %></option>
-                                    <% }); %>
-                                </select>
-                            </div>
+                                <label for="" class="fw-bold">valor</label>
+                                
+                                <input type="number" class="form-control" step="any" name="valor" value="<%= infoRow %>" placeholder="Valor del concepto">
+                     
+                                </div>
                     
                            
                     
                            
-                            <button type="submit" class="btn btn-primary mt-3">Agregar</button>
+                            <button type="submit" class="btn btn-primary mt-3">Editar</button>
                           </form>
                         
                        

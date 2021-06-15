@@ -5,12 +5,12 @@ const midd = require('../middlewares/middleware.user');
 var auth = require('../models/authenticaUser');
 var isAdmin = auth.isAdmin;
 
-router.get('/',budgetController.getPresupuestoIndexes);
-router.get('/addPresupuesto',budgetController.addPresupuestoGet);
-router.post('/addPresupuesto',budgetController.addPresupuestoPost);
-router.get('/editPresupuesto/:idPresupuesto',budgetController.editPresupuestoGet);
-router.post('/editPresupuesto/:idPresupuesto',budgetController.editPresupuestoPost);
-//router.get('/deleteProduct/:idProduct',adminProductsController.deleteProductGet);
+router.get('/',budgetController.getBudgetIndexes);
+router.get('/budget/addBudget',budgetController.addBudgetGet);
+router.post('/budget/addBudget',budgetController.addBudgetPost);
+router.get('/budget/editBudget/:idBudget',budgetController.editBudgetGet);
+router.post('/budget/editBudget/:idBudget',budgetController.editBudgetPost);
+router.get('/budget/deleteBudget/:idBudget',budgetController.deleteBudgetGet);
 
 
 //aplicarle rutas a esa instancia

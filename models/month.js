@@ -13,16 +13,6 @@ class Month extends Model
         return await Month.findAll();
     }
 
-    async countAllBudgets()
-    {
-        return await Month.count();
-    }
-
-
-    
-
-
-
   
     
 }
